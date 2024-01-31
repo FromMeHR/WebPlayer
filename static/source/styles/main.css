@@ -1,0 +1,30 @@
+body {
+    background: linear-gradient(0deg, #000000 62%, #333333 99%) fixed no-repeat;
+    color: white;
+    font-family: 'poppins', sans-serif;
+}
+
+svg {
+    margin-inline: 0.2em;
+}
+
+.nav-link {
+    color:rgb(162, 162, 162);
+}
+.nav-bar .nav-link.active {
+    color:rgb(255, 255, 255);
+}
+.navbar-toggler {
+    background-color: #121212;
+}
+.navbar {
+    box-shadow: -1px 4px 22px 6px #000000;
+}
+
+.footer-text p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 14px;
+    color: rgb(162, 162, 162);
+}

@@ -1,0 +1,26 @@
+.album-texts a {
+    color: white;
+    text-decoration: none;
+}
+
+
+.album-texts p {
+    color: rgb(162, 162, 162);
+}
+
+.btn-outline-dark {
+    color: rgb(162, 162, 162);
+    margin-top: 2em;
+}
+
+@media (max-width: 756px) {
+    .carousel-indicators {
+        display: none;
+    }
+    .album-texts {
+        margin: 10px;
+    }
+    .btn-outline-dark {
+        margin-top: 0em;
+    }
+}
