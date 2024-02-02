@@ -1,0 +1,15 @@
+th, td {
+    border: none;
+}
+.text-album {
+    margin-top: 20px;
+}
+
+@media (max-width: 759px) {
+    .music_img {
+        display:none;
+    }
+    .text-album {
+        margin-top: 0;
+    }
+}

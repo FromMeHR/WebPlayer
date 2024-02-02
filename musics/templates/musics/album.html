@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "source/styles/musics.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="containe-fluid m-4">
+  <div class="row">
+      <div class="col-lg-3 col-md-2">
+      </div>
+      <div class="col-lg-6 col-md-8" data-bs-theme="dark">
+        <div class="container-fluid bg-body-tertiary rounded-top">
+          <div class="row">
+            <div class="col-8 col-md-4">
+              <img src="{{ album_image }}" class="w-50 m-4 rounded album-image" alt="">
+            </div>
+            <div class="col-4 col-md-8 mt-4">
+              <h3>{{ album_name }}</h3>
+            </div>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" class="col-lg-1"><span style="margin-left: 22px;">#</span></th>
+              <th scope="col" class="col-lg-9">Name</th>
+              <th scope="col" class="col-lg-2"><svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 10px;" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+              </svg></th>
+            </tr>
+          </thead>
+          <tbody class="audio-tracks">
+            {% for music in musics %}
+            <tr>
+              <th scope="row">            
+                <button type="button" class="btn btn-dark play_single m-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play play_svg" viewBox="0 0 16 16">
+                  <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+                </svg>
+                </button></th>
+              <td>{{ music.title }} - {{ music.artiste }}</td>
+              <td>{{ music.time_formatter }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="col-lg-3 col-md-4">
+      </div>
+  </div>
+</div>
+{{ music_list |json_script:"musics" }}
+{% endblock %}

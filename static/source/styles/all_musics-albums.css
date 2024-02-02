@@ -1,0 +1,23 @@
+.card {
+    background-color: #171717;
+    border-radius: 15px;
+    width: 200px;
+}
+.card img {
+    border-radius: 20px;
+    padding: 15px;
+}
+.card-body h5 {
+    color: white;
+}
+.card-body p {
+    color: rgb(162, 162, 162);
+
+}
+.card-body a {
+    text-decoration: none;
+    color: #fff;
+}
+.card-body a:hover {
+    text-decoration: underline;
+}

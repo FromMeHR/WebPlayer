@@ -16,12 +16,3 @@ document.addEventListener('DOMContentLoaded', function() {
         footer.classList.remove('fixed-bottom');
     }
 });
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    var scroll = window.innerHeight < document.body.scrollHeight;
-    var footer = document.querySelector('footer');
-    if (scroll) {
-        footer.classList.remove('fixed-bottom');
-    }
-});

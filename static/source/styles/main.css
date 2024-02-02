@@ -8,6 +8,11 @@ svg {
     margin-inline: 0.2em;
 }
 
+.progress svg {
+    margin-inline: 0em;
+    width: 10px
+}
+
 .nav-link {
     color:rgb(162, 162, 162);
 }
@@ -21,10 +26,17 @@ svg {
     box-shadow: -1px 4px 22px 6px #000000;
 }
 
-.footer-text p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 14px;
+.footer-text {
+    margin-top: 2em;
     color: rgb(162, 162, 162);
+}
+.footer-box-shadow {
+    box-shadow: -1px -8px 22px 6px #000000;
+}
+
+@media (max-width: 759px) {
+    .footer-text {
+        margin-top: 0;
+        color: rgb(162, 162, 162);
+    }
 }
