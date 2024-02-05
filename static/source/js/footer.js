@@ -14,6 +14,7 @@ $(document).ready(function () {
     const prev = $('.prev');
     const next = $('.next');
     const audio_tracks = $('.audio-tracks')
+    const audio_tracks_by_genre = $('.audio-tracks-bygenre')
 
 
     const setSRC = (index) => {
@@ -38,6 +39,15 @@ $(document).ready(function () {
         progress.css('width', progressPercent + '%');
         duration.text(formatTime(player.duration));
         currentTime.text(formatTime(player.currentTime));
+        if (progressPercent >= 100) {
+            musicIndex++;
+            if (musicIndex < musics.length) {
+                setSRC(musicIndex);
+            } else {
+                musicIndex = 0;
+                setSRC(musicIndex);
+            }
+        }
     })
     player.addEventListener('loadedmetadata',()=>{
         duration.text(formatTime(player.duration))
@@ -67,6 +77,17 @@ $(document).ready(function () {
     audio_tracks.on('click', 'button.play_single', function () {
         const clicked = $(this).closest('tr').index();
         musicIndex = clicked;
+        setSRC(musicIndex);
+        if (player.paused) {
+            player.play();
+        } else {
+            player.pause();
+        }
+    })
+    audio_tracks_by_genre.on('click', 'button.play-single-bygenre', function () {
+        const clicked = $(this).closest('.audio-tracks-bygenre').attr('id');
+        const index = clicked - 1;
+        musicIndex = index;
         setSRC(musicIndex);
         if (player.paused) {
             player.play();

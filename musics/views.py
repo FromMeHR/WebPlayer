@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from musics.models import Music, Album
+from django.shortcuts import get_object_or_404, render
+from musics.models import Music, Album, Genre
 
 def albums(request):
     albums = Album.objects.all()
@@ -18,9 +18,33 @@ def album(request, album_id):
         'title':'Album',
         'musics': musics,
         'music_list': music_list,
-        'album_name': album.name,
-        'album_image': album.image.url,
+        'album': album,
     }
     return render(request, 'musics/album.html', context)
+
+def search(request):
+    genres = Genre.objects.all()
+    
+    context = {
+        'title': 'Search',
+        'genres': genres,
+    }
+    return render(request, 'musics/search.html', context)
+
+def genre(request, genre_slug):
+    genre = get_object_or_404(Genre, slug=genre_slug)
+    if genre_slug == "musics":
+        musics = Music.objects.all()
+    else:
+        musics = Music.objects.filter(genre=genre)
+    music_list = list(musics.values())
+        
+    context = {
+        'title': genre.name,
+        'genre': genre,
+        'musics': musics,
+        'music_list': music_list,
+    }
+    return render(request, 'musics/genre.html', context)
 
 

@@ -1,15 +1,34 @@
 import math
 from django.db import models
+from colorfield.fields import ColorField
+from django.utils.text import slugify
+
 
 from musics.utils import get_audio_length
 from musics.validators import validate_is_audio
 
-genre = (
-    ('Music', 'Music'),
-    ('Pop', 'Pop'),
-    ('Rock', 'Rock'),
-    ('Relax', 'Relax'),
-)
+class Genre(models.Model):
+    COLOR_PALETTE = [
+        ("#FFFFFF", "white", ),
+        ("#000000", "black", ),
+    ]
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='images_of_genres')
+    color = ColorField(default='#FF0000', samples=COLOR_PALETTE)
+    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
+    
+    class Meta:
+        db_table = 'genre'
+        verbose_name = 'Genre'
+        verbose_name_plural = 'Genres'
+
+    def __str__(self):
+        return self.name
 
 class Album(models.Model):
     name=models.CharField(max_length=400)
@@ -25,8 +44,8 @@ class Album(models.Model):
 
 class Music(models.Model):
     title=models.CharField(max_length=100)
-    artiste=models.CharField(max_length=50)
-    genre = models.CharField(choices=genre, max_length=20, default='Music')
+    artiste=models.CharField(max_length=50, unique=True)
+    genre = models.ForeignKey(to=Genre, on_delete=models.SET_NULL, blank=True, null=True)
     album=models.ForeignKey(to=Album, on_delete=models.SET_NULL, blank=True, null=True)
     time_length=models.DecimalField(max_digits=20, decimal_places=2, blank=True)
     music=models.FileField(upload_to='musics', validators=[validate_is_audio])

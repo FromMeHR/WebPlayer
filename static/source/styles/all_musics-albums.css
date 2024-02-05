@@ -3,21 +3,33 @@
     border-radius: 15px;
     width: 200px;
 }
+
 .card img {
     border-radius: 20px;
     padding: 15px;
 }
-.card-body h5 {
+.card-img-genres,
+.card-img-albums {
+    height: 197px;
+    width: 198px;
+}
+
+.card-body h5,
+.card-body p,
+.card-body a {
     color: white;
 }
-.card-body p {
-    color: rgb(162, 162, 162);
 
-}
 .card-body a {
     text-decoration: none;
-    color: #fff;
 }
+
 .card-body a:hover {
     text-decoration: underline;
+}
+
+.btn.play-single-bygenre {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
