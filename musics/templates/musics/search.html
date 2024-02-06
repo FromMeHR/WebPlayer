@@ -3,6 +3,8 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static "source/styles/search.css" %}">
+    <link rel="stylesheet" href="{% static "source/styles/musics.css" %}">
+    <link rel="stylesheet" href="{% static "source/styles/all_musics-albums.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -10,32 +12,84 @@
     <div class="row">
         <div class="col-lg-3"></div>
         <div class="col-lg-8 col-md-12">
-            <form action="">
-                <input type="search" class="search-input" placeholder="What do you want to listen?">
+            <form role="search" action="{% url "music:search" %}" method="get">
+                <input type="search" name="q" value="{{ request.GET.q }}" class="search-input mx-1" aria-label="Search" placeholder="What do you want to listen?">
+                {% if musics %}
+                    <input type="hidden" name="search_type" value="{{ request.GET.search_type }}">
+                    <div class="btn-group me-2" role="group" aria-label="Second group">
+                        <button type="button" id="search-songs" data-type="songs" class="custom-btn mx-1 {% if request.GET.search_type == 'songs' %}active{% endif %}">Songs</button>
+                        <button type="button" id="search-albums" data-type="albums" class="custom-btn mx-1 {% if request.GET.search_type == 'albums' %}active{% endif %}">Albums</button>
+                    </div>
+                    <button type="submit" style="display:none;" id="search-submit"></button>
+                {% endif %}
             </form>
         </div><div class="col-lg-1"></div>
     </div>
-    <div class="col-lg-1">
-    </div>
     <div class="row">
-        <div class="col-lg-1"></div>  
-        <div class="col-lg-10 col-md-12">
-            <hr>
-            <div class="row">
-                <h2>Everything else</h2>
-                {% for genre in genres %}
-                    <div class="col-lg-2 col-md-6 mt-4">
-                        <a href="{% url "musics:genre" genre.slug %}" class="text-decoration-none">
-                            <div class="card mx-auto" style="background-color: {{ genre.color }};">
-                                <h3 class="text-white">{{ genre.name }}</h3>
-                                <img src="{{ genre.image.url }}" class="card-img-top" alt="...">
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
+        {% if request.GET.search_type == 'albums' %}
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10 col-md-12">
+                {% include "includes/show-albums.html" %}
             </div>
-        </div>
-        <div class="col-lg-1 col-md-12"></div>
+            <div class="col-lg-1"></div>
+        {% endif %}
+        {% if musics %}
+            {% if request.GET.search_type != 'albums' %}
+                <div class="col-lg-3 col-md-2">
+                </div>
+                <div class="col-lg-6 col-md-8" data-bs-theme="dark"><hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col" class="col-lg-1"><span style="margin-left: 22px;">#</span></th>
+                        <th scope="col" class="col-lg-5">Name</th>
+                        <th scope="col" class="col-lg-4">Album</th>
+                        <th scope="col" class="col-lg-2"><svg xmlns="http://www.w3.org/2000/svg" style="margin-left: 10px;" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                        </svg></th>
+                        </tr>
+                    </thead>
+                    <tbody class="audio-tracks">
+                        {% for music in musics %}
+                        <tr>
+                        <th scope="row">            
+                            <button type="button" class="btn btn-dark play_single m-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play play_svg" viewBox="0 0 16 16">
+                            <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+                            </svg>
+                            </button></th>
+                            <td><img src="{{ music.image.url }}" class="card-img-search mx-1" alt="...">
+                                {{ music.title }} - {{ music.artiste }}</td>
+                            <td><a href="{% url "musics:albums_page" music.album.id %}" class="album-link">{{ music.album.name }}</a></td>
+                            <td>{{ music.time_formatter }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% else %}
+            <div class="row">
+                <div class="col-lg-1"></div>  
+                <div class="col-lg-10 col-md-12"><hr>
+                    <div class="row">
+                        <h2>Everything else</h2>
+                        {% for genre in genres %}
+                            <div class="col-lg-2 col-md-6 mt-4">
+                                <a href="{% url "musics:genre" genre.slug %}" class="text-decoration-none">
+                                    <div class="card-search-genre mx-auto" style="background-color: {{ genre.color }};">
+                                        <h3 class="text-white">{{ genre.name }}</h3>
+                                        <img src="{{ genre.image.url }}" class="card-img-top" alt="...">
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-12"></div>
+            </div>
+        {% endif %}
     </div>
 </div>	
+{{ music_list |json_script:"musics" }}
 {% endblock %}

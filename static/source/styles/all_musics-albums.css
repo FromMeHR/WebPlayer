@@ -14,18 +14,25 @@
     width: 198px;
 }
 
+.album-link,
 .card-body h5,
 .card-body p,
 .card-body a {
     color: white;
 }
 
+.album-link,
 .card-body a {
     text-decoration: none;
 }
 
+.album-link:hover,
 .card-body a:hover {
     text-decoration: underline;
+}
+
+.card-body .card-text {
+    color: rgb(162, 162, 162);
 }
 
 .btn.play-single-bygenre {

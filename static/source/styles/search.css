@@ -19,7 +19,7 @@
     background-color: rgb(80, 80, 80);
 }
 
-.card {
+.card-search-genre {
     border-radius: 15px;
     width: 200px;
     height: 200px;
@@ -27,15 +27,41 @@
     position: relative;
 }
 
-.card img {
-    width: 100px;
+.card-search-genre img {
+    width: 80px;
     position: absolute; 
-    right: -10px;
-    bottom: -10px;
+    border-radius: 10px;
+    right: -6px;
+    bottom: -6px;
     transform: rotate(30deg);
 }
 
-.card h3 {
+.card-search-genre h3 {
     padding: 10px;
     font-weight: 600;
+}
+
+.btn-group .custom-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px;
+    border: none;
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: rgb(80, 80, 80);
+    cursor: pointer;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    font-size: 13px;
+    font-weight: bold; 
+}
+.card-img-search {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+}
+
+.btn-group .custom-btn:hover,
+.btn-group .custom-btn.active {
+    color: rgb(80, 80, 80);
+    background-color: #ffffff;
 }

@@ -4,7 +4,7 @@ from colorfield.fields import ColorField
 from django.utils.text import slugify
 
 
-from musics.utils import get_audio_length
+from musics.helpers import get_audio_length
 from musics.validators import validate_is_audio
 
 class Genre(models.Model):

@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from musics.models import Music, Album, Genre
+from musics.utils import q_search
 
 def albums(request):
     albums = Album.objects.all()
@@ -24,10 +25,24 @@ def album(request, album_id):
 
 def search(request):
     genres = Genre.objects.all()
-    
+    query = request.GET.get('q', None)
+    search_type = request.GET.get('search_type', None)
+    albums = None
+    musics = None
+    music_list = None
+    if query:
+        musics = q_search(query)
+        if musics:
+            music_list = list(musics.values())
+        if search_type == 'albums':
+            albums = q_search(query, search_type)
+         
     context = {
         'title': 'Search',
         'genres': genres,
+        'musics': musics,
+        'albums': albums,
+        'music_list': music_list,
     }
     return render(request, 'musics/search.html', context)
 

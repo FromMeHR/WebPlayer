@@ -40,3 +40,13 @@ img, svg {
 .items-center {
   align-items: center;
 }
+
+@media (max-width: 1000px) {
+  .volume-icon,
+  .music_img {
+      display:none;
+  }
+  .text-album {
+      margin-top: 0;
+  }
+}
